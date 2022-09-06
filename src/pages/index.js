@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {UserDetail, Login, realmApp} from "../components/RealmComponents";
 import {BaseGrid} from "../components/Layouts/Layouts";
 import {Body, Footer, Header} from "../components/Layouts/PageSections";
+import Image from "next/image";
 
 const Home = () => {
 
@@ -14,7 +15,15 @@ const Home = () => {
   return (
        <BaseGrid>
           <Header>
+             <Image src={require("../public/iosclub_webbanner.svg")}
+                    height={64}
+                    width={180}
 
+                    style={{
+                       padding: 0,
+                       margin: 0
+                    }}
+             />
           </Header>
 
           <Body>
