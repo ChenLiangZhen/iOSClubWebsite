@@ -12,16 +12,25 @@ export const BaseGrid = styled.div`
   grid-template-rows: [Top] 64px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
   min-height: 100vh;
   width: 100vw;
-  
-  @media (min-width: 480px) and (max-width: 960px) {
-    grid-template-columns: [Left] 7.5% [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 7.5% [Right];
-    grid-template-rows: [Top] 64px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
 
+  @media (min-width: 960px) and (max-width: 1280px) {
+    grid-template-columns: [Left] 5% [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 5% [Right];
+    grid-template-rows: [Top] 64px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
+  }
+
+  @media (min-width: 768px) and (max-width: 960px) {
+    grid-template-columns: [Left] 5% [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 5% [Right];
+    grid-template-rows: [Top] 64px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
+  }
+  
+  @media (min-width: 480px) and (max-width: 768px) {
+    grid-template-columns: [Left] 5% [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 5% [Right];
+    grid-template-rows: [Top] 64px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
   }
   
   @media (max-width: 480px) {
-    grid-template-columns: [Left] 12px [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 12px [Right];
-    grid-template-rows: [Top] 64px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
+    grid-template-columns: [Left] 12px [ContentLeft] 8px [BodyLeft]  1fr [BodyRight] 8px [ContentRight] 12px [Right];
+    grid-template-rows: [Top] 54px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
   }
   
 `

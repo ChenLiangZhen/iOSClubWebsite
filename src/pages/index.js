@@ -14,9 +14,8 @@ const Home = () => {
 
   return (
        <BaseGrid>
+
           <PageHeader>
-
-
 
           </PageHeader>
 

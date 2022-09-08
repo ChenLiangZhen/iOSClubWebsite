@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import {motion} from "framer-motion";
 import Image from "next/image";
+import MobileMenu from "./MobileMenu";
 
 export const HeaderContent = styled(motion.div).attrs(props => ({}))`
 
@@ -40,6 +41,27 @@ export const FooterContent = styled(motion.div).attrs(props => ({}))`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  //@media (min-width: 960px) and (max-width: 1280px) {
+  //  grid-template-columns: [Left] 5% [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 5% [Right];
+  //  grid-template-rows: [Top] 64px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
+  //}
+  //
+  //@media (min-width: 768px) and (max-width: 960px) {
+  //  grid-template-columns: [Left] 5% [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 5% [Right];
+  //  grid-template-rows: [Top] 64px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
+  //}
+  //
+  //@media (min-width: 480px) and (max-width: 768px) {
+  //  grid-template-columns: [Left] 5% [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 5% [Right];
+  //  grid-template-rows: [Top] 64px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
+  //}
+
+  @media (max-width: 480px) {
+    
+    flex-direction: column;
+    justify-content: center;
+  }
 `
 
 export const NavTitle = styled(motion.div).attrs(props => ({}))`
@@ -59,6 +81,10 @@ export const NavTitle = styled(motion.div).attrs(props => ({}))`
     letter-spacing: 4px;
     transition-duration: 250ms;
   }
+  
+  @media (max-width: 480px) {
+    display: none 
+  }
 `
 
 export const PageHeader = () => {
@@ -75,6 +101,7 @@ export const PageHeader = () => {
 				       layout={"fixed"}
 				       style={{
 					       padding: 0,
+					       paddingBottom: 2,
 					       margin: 0
 				       }}
 				/>
@@ -95,6 +122,8 @@ export const PageHeader = () => {
 					<NavTitle>
 						歷屆幹部
 					</NavTitle>
+
+					<MobileMenu/>
 
 				</div>
 
@@ -141,7 +170,7 @@ export const PageFooter = () => {
 
 				<div style={{
 
-					fontWeight: "300",
+					fontWeight: "500",
 					fontSize: "0.9rem",
 					letterSpacing: 1
 				}}>
@@ -151,7 +180,7 @@ export const PageFooter = () => {
 				<div style={{
 
 					fontWeight: "200",
-					fontSize: "0.8rem",
+					fontSize: "0.75rem",
 					letterSpacing: 1
 				}}>
 					Copyright ⓒ 2022 NTUE iOS Club
