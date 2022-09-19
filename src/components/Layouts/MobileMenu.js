@@ -157,7 +157,7 @@ const MobileMenuItem_ = styled(motion.a)`
 
   @media (max-width: 480px) {
 
-    padding: 8px 32px 8px 0;
+    padding: 8px 24px 12px 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -224,24 +224,23 @@ function MobileMenu() {
 			<AnimatePresence>
 				{isOpen ?
 					<MobileMenuContainer key="MobileMenuContainer" initial={{y: -1200, opacity: 0.65}}
-					                     animate={{y: 0, opacity: 1}} exit={{y: -50, opacity: 0}}
+					                     animate={{y: -25, opacity: 1}} exit={{y: -100, opacity: 0}}
 					                     transition={{type: "spring", stiffness: 250, damping: 50}}>
 
 						{/*<HStack padding="0 10px 0 10px" width="100%" height="60px" margin="" justifyContent="flex-start">*/}
 						{/*	<SunIcon size={32}/>*/}
 						{/*</HStack>*/}
-						<MobileMenuItem custom={0} initial={{x: -50, opacity: 0}} animate={controls} title="- 登入帳號"
+						<MobileMenuItem custom={0} initial={{x: -50, opacity: 0}} animate={controls} title="- 社團介紹"
 						                link=""/>
-						<MobileMenuItem custom={1} initial={{x: -50, opacity: 0}} animate={controls} title="- 註冊帳號"
+						<MobileMenuItem custom={1} initial={{x: -50, opacity: 0}} animate={controls} title="- 學習資源"
 						                link=""/>
-						<MobileMenuItem custom={2} initial={{x: -50, opacity: 0}} animate={controls} title="- 手機應用程式下載"
+						<MobileMenuItem custom={2} initial={{x: -50, opacity: 0}} animate={controls} title="- 講師簡介"
 						                link=""/>
-						<MobileMenuItem custom={3} initial={{x: -50, opacity: 0}} animate={controls} title="- 開發路程規劃"
+						<MobileMenuItem custom={3} initial={{x: -50, opacity: 0}} animate={controls} title="- 歷屆幹部"
 						                link=""/>
-						<MobileMenuItem custom={4} initial={{x: -50, opacity: 0}} animate={controls} title="- 用戶反饋"
+						<MobileMenuItem custom={4} initial={{x: -50, opacity: 0}} animate={controls} title="- 留言板"
 						                link=""/>
-						<MobileMenuItem custom={5} initial={{x: -50, opacity: 0}} animate={controls} title="- 關於台灣天氣"
-						                link=""/>
+
 					</MobileMenuContainer> : <></>
 				}
 			</AnimatePresence>
