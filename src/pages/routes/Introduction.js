@@ -1,8 +1,8 @@
 import React from "react";
-import {BaseGrid} from "../components/layouts/Layouts";
-import {PageBody, PageFooter, PageHeader} from "../components/layouts/PageSections";
+import {BaseGrid} from "../../components/layouts/Layouts";
+import {PageBody, PageFooter, PageHeader} from "../../components/layouts/PageSections";
 
-const IntroductionPage = () => {
+const Introduction = () => {
 
 	 return (
 		 <BaseGrid>
@@ -21,5 +21,5 @@ const IntroductionPage = () => {
 	 )
 }
 
-export default IntroductionPage
+export default Introduction
 

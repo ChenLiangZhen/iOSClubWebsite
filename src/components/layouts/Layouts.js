@@ -9,23 +9,23 @@ export const BaseGrid = styled.div`
 
   display: grid;
   grid-template-columns: [Left] 15% [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 15% [Right];
-  grid-template-rows: [Top] 64px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
+  grid-template-rows: [Top] 48px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
   min-height: 100vh;
   width: 100vw;
 
   @media (min-width: 960px) and (max-width: 1280px) {
     grid-template-columns: [Left] 5% [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 5% [Right];
-    grid-template-rows: [Top] 64px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
+    grid-template-rows: [Top] 48px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
   }
 
   @media (min-width: 768px) and (max-width: 960px) {
     grid-template-columns: [Left] 5% [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 5% [Right];
-    grid-template-rows: [Top] 64px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
+    grid-template-rows: [Top] 48px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
   }
   
   @media (min-width: 480px) and (max-width: 768px) {
     grid-template-columns: [Left] 5% [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 5% [Right];
-    grid-template-rows: [Top] 64px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
+    grid-template-rows: [Top] 48px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
   }
   
   @media (max-width: 480px) {

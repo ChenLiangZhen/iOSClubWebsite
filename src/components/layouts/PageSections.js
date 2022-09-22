@@ -2,6 +2,7 @@ import styled from "styled-components"
 import {motion} from "framer-motion";
 import Image from "next/image";
 import MobileMenu from "./MobileMenu";
+import Link from "next/link";
 
 export const HeaderContent = styled(motion.div).attrs(props => ({}))`
   
@@ -34,16 +35,18 @@ export const HeaderSeparator = styled(motion.div).attrs(props => ({}))`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    
   }
 
   @media (max-width: 480px) {
 
     flex-direction: column;
     justify-content: center;
+    
   }
 `
 
-export const Body = styled(motion.div).attrs(props => ({}))`
+export const PageBody = styled(motion.div).attrs(props => ({}))`
 
   grid-area: BodyTop / BodyLeft / BodyBottom / BodyRight
 `
@@ -55,6 +58,7 @@ export const FooterSeparator = styled(motion.div).attrs(props => ({}))`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  
 `
 
 export const FooterContent = styled(motion.div).attrs(props => ({}))`
@@ -63,7 +67,7 @@ export const FooterContent = styled(motion.div).attrs(props => ({}))`
   
   grid-area: FooterTop / BodyLeft / Bottom / BodyRight;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 
   @media (max-width: 480px) {
@@ -75,20 +79,74 @@ export const FooterContent = styled(motion.div).attrs(props => ({}))`
 
 export const NavTitle = styled(motion.div).attrs(props => ({}))`
 
-  width: 96px;
+  width: 88px;
   height: 32px;
   text-align: center;
   line-height: 32px;
 
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 300;
-  letter-spacing: 1px; 
+  font-family: "Noto Sans TC";
+  letter-spacing: 1px;
+  transition-duration: 250ms;
 
+  z-index: 10;
+  
   :hover {
     cursor: pointer;
     font-weight: 500;
     letter-spacing: 4px;
     transition-duration: 250ms;
+  }
+  
+  //@media (max-width: 480px) {
+  //  display: none 
+  //}
+`
+
+export const NavLogin = styled(motion.div).attrs(props => ({}))`
+
+  width: 84px;
+  height: 30px;
+  text-align: center;
+  line-height: 32px;
+
+  //background-color: #000;
+  background: linear-gradient(135deg, rgba(25, 0, 255, 0.8), rgba(255, 0, 0, 0) 100%), linear-gradient(225deg, rgba(183, 0, 255, 0.8), rgba(255, 0, 0, 0) 100%);
+  border-radius: 8px;
+
+  margin-left: 32px;
+
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 300;
+  //font-family: "Noto Sans TC";
+  letter-spacing: 1px;
+  transition-duration: 500ms;
+
+
+  line-height: 30px;
+  z-index: 10;
+
+  :hover {
+
+    //background-color: #fff;
+    background: linear-gradient(135deg, rgba(123, 0, 255, 0.8), rgba(255, 0, 0, 0) 100%), linear-gradient(225deg, rgba(255, 0, 204, 0.8), rgba(255, 0, 0, 0) 100%);
+
+    cursor: pointer;
+    font-weight: 500;
+    transition-duration: 500ms;
+  }
+
+  //@media (max-width: 480px) {
+  //  display: none 
+  //}
+`
+
+export const Branding = styled(motion.div).attrs(props => ({}))`
+  
+  :hover {
+    cursor: pointer;
   }
   
   //@media (max-width: 480px) {
@@ -104,33 +162,57 @@ export const PageHeader = () => {
 
 			<HeaderContent>
 
-				<Image src={require("../../public/iosclub_branding.svg")}
-				       height={34}
-				       width={124}
-				       layout={"fixed"}
-				       style={{
-					       padding: 0,
-					       paddingBottom: 2,
-					       margin: 0
-				       }}
-				/>
+				<Link href={"/"} passHref>
+
+					<Branding>
+						<Image src={require("../../public/iosclub_branding.svg")}
+						       height={27}
+						       width={99}
+						       layout={"fixed"}
+						       style={{
+
+							       padding: 0,
+							       margin: 0,
+						       }}
+						/>
+					</Branding>
+
+				</Link>
 
 				<div style={{
 					display: "flex",
 					flexDirection: "row"
 				}}>
 
-					<NavTitle>
-						社團介紹
-					</NavTitle>
+					<Link href={'/routes/Introduction'} passHref>
+						<NavTitle>
+							社團介紹
+						</NavTitle>
+					</Link>
 
-					<NavTitle>
-						學習資源
-					</NavTitle>
+					<Link href={'/routes/LearningResources'} passHref>
+						<NavTitle>
+							學習資源
+						</NavTitle>
+					</Link>
 
-					<NavTitle>
-						歷屆幹部
-					</NavTitle>
+					<Link href={'/routes/Teams'} passHref>
+						<NavTitle>
+							指導教師
+						</NavTitle>
+					</Link>
+
+					<Link href={'/routes/Teams'} passHref>
+						<NavTitle>
+							歷屆幹部
+						</NavTitle>
+					</Link>
+
+					<Link href={'/routes/Teams'} passHref>
+						<NavLogin>
+							社員登入
+						</NavLogin>
+					</Link>
 
 					<MobileMenu/>
 
@@ -146,7 +228,7 @@ export const PageHeader = () => {
 
 					height: 1,
 					width: "100vw",
-					background: "#888",
+					background: "#ccc",
 
 				}}/>
 
@@ -169,7 +251,7 @@ export const PageFooter = () => {
 
 					height: 1,
 					width: "100vw",
-					background: "#888",
+					background: "#ccc",
 
 				}}/>
 
@@ -180,20 +262,21 @@ export const PageFooter = () => {
 				<div style={{
 
 					fontWeight: "500",
-					fontSize: "0.9rem",
-					letterSpacing: 1
-				}}>
-					國立台北教育大學 iOS Club 社團
-				</div>
-
-				<div style={{
-
-					fontWeight: "200",
 					fontSize: "0.75rem",
-					letterSpacing: 1
+					letterSpacing: 1,
+					fontFamily: "Quicksand"
 				}}>
-					Copyright ⓒ 2022 NTUE iOS Club
+					國立台北教育大學 iOS Club 社團 ｜ Copyright ⓒ 2022 NTUE iOS Club
 				</div>
+
+				{/*<div style={{*/}
+
+				{/*	fontWeight: "200",*/}
+				{/*	fontSize: "0.75rem",*/}
+				{/*	letterSpacing: 1*/}
+				{/*}}>*/}
+				{/*	*/}
+				{/*</div>*/}
 
 			</FooterContent>
 
