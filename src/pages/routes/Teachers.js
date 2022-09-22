@@ -2,7 +2,7 @@ import React from "react";
 import {BaseGrid} from "../../components/layouts/Layouts";
 import {PageBody, PageFooter, PageHeader} from "../../components/layouts/PageSections";
 
-const Teacher = () => {
+const Teachers = () => {
 
 	return (
 		<BaseGrid>
@@ -21,5 +21,5 @@ const Teacher = () => {
 	)
 }
 
-export default Teacher
+export default Teachers
 

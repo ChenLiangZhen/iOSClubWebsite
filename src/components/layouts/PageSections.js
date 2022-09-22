@@ -3,6 +3,8 @@ import {motion} from "framer-motion";
 import Image from "next/image";
 import MobileMenu from "./MobileMenu";
 import Link from "next/link";
+import {useEffect} from "react";
+import {useRouter} from "next/router";
 
 export const HeaderContent = styled(motion.div).attrs(props => ({}))`
   
@@ -80,14 +82,19 @@ export const FooterContent = styled(motion.div).attrs(props => ({}))`
 export const NavTitle = styled(motion.div).attrs(props => ({}))`
 
   width: 88px;
-  height: 32px;
-  text-align: center;
+  height: 48px;
+  
   line-height: 32px;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
 
   font-size: 0.8rem;
-  font-weight: 300;
+  font-weight: ${props => props.route == props.name ? 500 : 300};
   font-family: "Noto Sans TC";
-  letter-spacing: 1px;
+  letter-spacing: ${props => props.route == props.name ? "4px" : "2px"};
   transition-duration: 250ms;
 
   z-index: 10;
@@ -156,6 +163,12 @@ export const Branding = styled(motion.div).attrs(props => ({}))`
 
 export const PageHeader = () => {
 
+	const route = useRouter().route
+
+	useEffect(()=> {
+
+	}, [])
+
 	return (
 
 		<>
@@ -181,35 +194,160 @@ export const PageHeader = () => {
 
 				<div style={{
 					display: "flex",
-					flexDirection: "row"
+					flexDirection: "row",
+					alignItems: "center"
 				}}>
 
 					<Link href={'/routes/Introduction'} passHref>
-						<NavTitle>
-							社團介紹
+
+						<NavTitle name={"/routes/Introduction"} route={route}>
+
+							<div style={{
+								height: "44px",
+								paddingTop: 8,
+								paddingLeft: 4
+							}}>
+								社團介紹
+							</div>
+
+							<div style={route == "/routes/Introduction" ? {
+								width: 80,
+								height: 4,
+								backgroundColor: "black"
+							} : {
+								width: 80,
+								height: 4,
+								backgroundColor: "transparent" }}/>
+
+							<div style={route == "/routes/Introduction" ? {
+
+								position: "absolute",
+								zIndex: -1,
+								width: 80,
+								height: 36,
+								background: "linear-gradient(to bottom, white, white, #f1e9ff, #bea4ff)"
+								// backgroundColor: "red"
+
+							} : {
+								display: "none" }}
+							/>
+
+
 						</NavTitle>
+
 					</Link>
 
 					<Link href={'/routes/LearningResources'} passHref>
-						<NavTitle>
-							學習資源
+						<NavTitle name={"/routes/LearningResources"} route={route}>
+
+							<div style={{
+								height: "44px",
+								paddingTop: 8,
+								paddingLeft: 4
+							}}>
+								學習資源
+							</div>
+
+							<div style={route == "/routes/LearningResources" ? {
+								width: 80,
+								height: 4,
+								backgroundColor: "black"
+							} : {
+								width: 80,
+								height: 4,
+								backgroundColor: "transparent" }}/>
+
+							<div style={route == "/routes/LearningResources" ? {
+
+								position: "absolute",
+								zIndex: -1,
+								width: 80,
+								height: 36,
+								background: "linear-gradient(to bottom, white, white, #f1e9ff, #bea4ff)"
+								// backgroundColor: "red"
+
+							} : {
+								display: "none" }}
+							/>
+
+						</NavTitle>
+					</Link>
+
+					<Link href={'/routes/Teachers'} passHref>
+						<NavTitle name={"/routes/Teachers"} route={route}>
+
+							<div style={{
+								height: "44px",
+								paddingTop: 8,
+								paddingLeft: 4
+							}}>
+								指導老師
+							</div>
+
+							<div style={route == "/routes/Teachers" ? {
+								width: 80,
+								height: 4,
+								backgroundColor: "black"
+							} : {
+								width: 80,
+								height: 4,
+								backgroundColor: "transparent" }}/>
+
+							<div style={route == "/routes/Teachers" ? {
+
+								position: "absolute",
+								zIndex: -1,
+								width: 80,
+								height: 36,
+								background: "linear-gradient(to bottom, white, white, #f1e9ff, #bea4ff)"
+								// backgroundColor: "red"
+
+							} : {
+								display: "none" }}
+							/>
+
 						</NavTitle>
 					</Link>
 
 					<Link href={'/routes/Teams'} passHref>
-						<NavTitle>
-							指導教師
+
+						<NavTitle name={"/routes/Teams"} route={route}>
+
+							<div style={{
+								height: "44px",
+								paddingTop: 8,
+								paddingLeft: 4
+							}}>
+								社團幹部
+							</div>
+
+							<div style={route == "/routes/Teams" ? {
+								width: 80,
+								height: 4,
+								backgroundColor: "black"
+							} : {
+								width: 80,
+								height: 4,
+								backgroundColor: "transparent" }}/>
+
+							<div style={route == "/routes/Teams" ? {
+
+								position: "absolute",
+								zIndex: -1,
+								width: 80,
+								height: 36,
+								background: "linear-gradient(to bottom, white, white, #f1e9ff, #bea4ff)"
+								// backgroundColor: "red"
+
+							} : {
+								display: "none" }}
+							/>
+
 						</NavTitle>
 					</Link>
 
 					<Link href={'/routes/Teams'} passHref>
-						<NavTitle>
-							歷屆幹部
-						</NavTitle>
-					</Link>
-
-					<Link href={'/routes/Teams'} passHref>
-						<NavLogin>
+						<NavLogin name={"/"} route={route}>
 							社員登入
 						</NavLogin>
 					</Link>
@@ -261,10 +399,11 @@ export const PageFooter = () => {
 
 				<div style={{
 
-					fontWeight: "500",
+					fontWeight: "300",
 					fontSize: "0.75rem",
 					letterSpacing: 1,
 					fontFamily: "Quicksand"
+
 				}}>
 					國立台北教育大學 iOS Club 社團 ｜ Copyright ⓒ 2022 NTUE iOS Club
 				</div>
