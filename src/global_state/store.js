@@ -13,11 +13,12 @@ const persistConfig = {
 export const store = configureStore({
 
     reducer: {
-        account: persistReducer(persistConfig, dataReducer),
+        data: persistReducer(persistConfig, dataReducer),
     },
+
     devTools: process.env.NODE_ENV !== 'production',
     middleware: [thunk]
 
 });
 
-persistStore(store);
+persistStore(store).purge()

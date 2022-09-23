@@ -18,12 +18,12 @@ export const BaseGrid = styled.div`
     grid-template-rows: [Top] 48px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
   }
 
-  @media (min-width: 768px) and (max-width: 960px) {
+  @media (min-width: 720px) and (max-width: 960px) {
     grid-template-columns: [Left] 5% [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 5% [Right];
     grid-template-rows: [Top] 48px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
   }
   
-  @media (min-width: 480px) and (max-width: 768px) {
+  @media (min-width: 480px) and (max-width: 720px) {
     grid-template-columns: [Left] 5% [ContentLeft] 20px [BodyLeft]  1fr [BodyRight] 20px [ContentRight] 5% [Right];
     grid-template-rows: [Top] 48px [HeaderBottom] 32px [BodyTop] auto [BodyBottom] 32px [FooterTop] 48px [Bottom];
   }

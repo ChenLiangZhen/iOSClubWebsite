@@ -126,7 +126,7 @@ export const NavLogin = styled(motion.div).attrs(props => ({}))`
 
   color: #fff;
   font-size: 0.75rem;
-  font-weight: 300;
+  font-weight: ${props => props.route == props.name ? 500 : 300};
   //font-family: "Noto Sans TC";
   letter-spacing: 1px;
   transition-duration: 500ms;
@@ -346,8 +346,8 @@ export const PageHeader = () => {
 						</NavTitle>
 					</Link>
 
-					<Link href={'/routes/Teams'} passHref>
-						<NavLogin name={"/"} route={route}>
+					<Link href={'/routes/Entry'} passHref>
+						<NavLogin name={"/routes/Entry"} route={route}>
 							社員登入
 						</NavLogin>
 					</Link>
@@ -405,7 +405,7 @@ export const PageFooter = () => {
 					fontFamily: "Quicksand"
 
 				}}>
-					國立台北教育大學 iOS Club 社團 ｜ Copyright ⓒ 2022 NTUE iOS Club
+					國立台北教育大學 iOS Club 社團 &nbsp; &nbsp;｜&nbsp; &nbsp; Copyright ⓒ 2022 NTUE iOS Club
 				</div>
 
 				{/*<div style={{*/}

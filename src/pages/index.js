@@ -3,37 +3,43 @@ import {UserDetail, Login, realmApp} from "../components/RealmComponents";
 import {BaseGrid} from "../components/layouts/Layouts";
 import {PageBody, PageFooter, PageHeader} from "../components/layouts/PageSections";
 import {useRouter} from "next/router";
-import Image from "next/image";
+import {useDispatch, useSelector} from "react-redux";
+import {selectData, setTestString} from "../global_state/dataSlice";
 
 const Home = () => {
 
-  const [user, setUser] = useState();
-  const router = useRouter()
+	const data = useSelector(state => state)
+	const dispatch = useDispatch()
 
-  useEffect(() => {
+	const [user, setUser] = useState();
+	const router = useRouter()
 
-     setUser(realmApp.currentUser)
-     console.log(router)
+	useEffect(() => {
 
-  }, [])
+		setUser(realmApp.currentUser)
+		console.log(router)
 
-  return (
-       <BaseGrid>
+	}, [])
 
-          <PageHeader>
+	return (
 
-          </PageHeader>
+		<BaseGrid>
 
-          <PageBody>
-             { user ? <UserDetail user={user} /> : <Login setUser={setUser} /> }
-          </PageBody>
+			<PageHeader>
 
-          <PageFooter>
+			</PageHeader>
 
-          </PageFooter>
+			<PageBody>
+				{user ? <UserDetail user={user}/> : <Login setUser={setUser}/>}
+			</PageBody>
 
-       </BaseGrid>
-  );
+			<PageFooter>
+
+			</PageFooter>
+
+		</BaseGrid>
+
+	);
 };
 
 export default Home;
