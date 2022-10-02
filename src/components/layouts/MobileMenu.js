@@ -3,6 +3,8 @@ import styled from "styled-components";
 import {AnimatePresence, motion, useAnimation} from "framer-motion";
 import Link from "next/link"
 import {useJsMediaQuery} from "../../utils/customHooks";
+import {NavLogin} from "./PageSections";
+import {useRouter} from "next/router";
 
 const MobileMenuButton = ({
 	                          isOpen = false,
@@ -55,7 +57,7 @@ const MobileMenuButton = ({
 		transition,
 		...lineProps
 	};
-	const unitHeight = 4;
+	const unitHeight = 4.5;
 	const unitWidth = (unitHeight * (width)) / (height);
 
 	return (
@@ -106,8 +108,8 @@ const MobileMenu_ = styled(motion.button)`
     justify-content: center;
     align-items: center;
     z-index: 10;
-    height: 36px;
-    width: 36px;
+    height: 32px;
+    width: 32px;
     background-color: transparent;
     outline: none;
     border: none;
@@ -130,6 +132,7 @@ const MobileMenuContainer = styled(motion.div)`
     padding-bottom: 96px;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     left: 0;
     top: 0;
     opacity: 0;
@@ -157,9 +160,10 @@ const MobileMenuItem_ = styled(motion.a)`
 
   @media (max-width: 480px) {
 
-    padding: 8px 24px 12px 0;
+    padding: 10px 0px 10px 0px;
     display: flex;
-    justify-content: flex-end;
+    width: 100%;
+    justify-content: center;
     align-items: center;
     font-size: 15px;
     letter-spacing: 1px;
@@ -187,6 +191,7 @@ function MobileMenuItem(props) {
 function MobileMenu() {
 
 	const [isOpen, setOpen] = useState(false)
+	const route = useRouter().route
 	const media = useJsMediaQuery()
 
 	function sleep(ms) {
@@ -223,23 +228,33 @@ function MobileMenu() {
 		<>
 			<AnimatePresence>
 				{isOpen ?
-					<MobileMenuContainer key="MobileMenuContainer" initial={{y: -1200, opacity: 0.65}}
-					                     animate={{y: -25, opacity: 1}} exit={{y: -100, opacity: 0}}
+
+					<MobileMenuContainer key="MobileMenuContainer" initial={{y: -1200, opacity: 0.5}}
+					                     animate={{y: -25, opacity: 1}} exit={{y: -50, opacity: 0}}
 					                     transition={{type: "spring", stiffness: 250, damping: 50}}>
 
 						{/*<HStack padding="0 10px 0 10px" width="100%" height="60px" margin="" justifyContent="flex-start">*/}
 						{/*	<SunIcon size={32}/>*/}
 						{/*</HStack>*/}
-						<MobileMenuItem custom={0} initial={{x: -50, opacity: 0}} animate={controls} title="- 社團介紹"
+
+						<Link href={'/routes/Entry'} passHref>
+							<NavLogin name={"/routes/Entry"} route={route}>
+								社員登入
+							</NavLogin>
+						</Link>
+
+						<MobileMenuItem custom={0} initial={{x: -25, opacity: 0}} animate={controls} title="社團介紹"
+						                link="/routes/Introduction"/>
+
+						<MobileMenuItem custom={1} initial={{x: -25, opacity: 0}} animate={controls} title="學習資源"
+						                link="/routes/LearningResources"/>
+						<MobileMenuItem custom={2} initial={{x: -25, opacity: 0}} animate={controls} title="指導老師"
+						                link="/routes/Teachers"/>
+						<MobileMenuItem custom={3} initial={{x: -25, opacity: 0}} animate={controls} title="歷屆幹部"
+						                link="/routes/Teams"/>
+						<MobileMenuItem custom={4} initial={{x: -25, opacity: 0}} animate={controls} title="留言板"
 						                link=""/>
-						<MobileMenuItem custom={1} initial={{x: -50, opacity: 0}} animate={controls} title="- 學習資源"
-						                link=""/>
-						<MobileMenuItem custom={2} initial={{x: -50, opacity: 0}} animate={controls} title="- 講師簡介"
-						                link=""/>
-						<MobileMenuItem custom={3} initial={{x: -50, opacity: 0}} animate={controls} title="- 歷屆幹部"
-						                link=""/>
-						<MobileMenuItem custom={4} initial={{x: -50, opacity: 0}} animate={controls} title="- 留言板"
-						                link=""/>
+
 
 					</MobileMenuContainer> : <></>
 				}

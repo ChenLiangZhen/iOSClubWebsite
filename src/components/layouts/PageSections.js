@@ -3,13 +3,18 @@ import {motion} from "framer-motion";
 import Image from "next/image";
 import MobileMenu from "./MobileMenu";
 import Link from "next/link";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
+import {useJsMediaQuery} from "../../utils/customHooks";
+import {realmApp} from "../RealmComponents";
+import NOSSR from "../utils/NOSSR";
+import {useDispatch, useSelector} from "react-redux";
+import {changeLoginState, selectData} from "../../global_state/dataSlice";
 
 export const HeaderContent = styled(motion.div).attrs(props => ({}))`
   
   @media (min-width: 480px) {
-
+    
     grid-area: Top / BodyLeft / HeaderBottom / BodyRight;
     display: flex;
     justify-content: space-between;
@@ -18,11 +23,16 @@ export const HeaderContent = styled(motion.div).attrs(props => ({}))`
 
   @media (max-width: 480px) {
 
-    height: 48px;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(4px);
+    
+    height: 47px;
     width: 100%;
     
     position: fixed;
     display: flex;
+    
+    padding-left: 20px;
     
     justify-content: space-between;
     align-items: center;
@@ -41,11 +51,27 @@ export const HeaderSeparator = styled(motion.div).attrs(props => ({}))`
   }
 
   @media (max-width: 480px) {
+    
+    position: fixed;
+    top: 47px;
 
-    flex-direction: column;
-    justify-content: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     
   }
+`
+
+export const HeaderNavBar = styled(motion.div).attrs(props => ({}))`
+
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 480px) {
+
+    display: none;
+  }
+  
 `
 
 export const PageBody = styled(motion.div).attrs(props => ({}))`
@@ -84,7 +110,7 @@ export const NavTitle = styled(motion.div).attrs(props => ({}))`
   width: 88px;
   height: 48px;
   
-  line-height: 32px;
+  line-height: 30px;
   
   display: flex;
   flex-direction: column;
@@ -111,7 +137,10 @@ export const NavTitle = styled(motion.div).attrs(props => ({}))`
   //}
 `
 
-export const NavLogin = styled(motion.div).attrs(props => ({}))`
+export const NavLogin = styled(motion.div).attrs(props => ({
+
+	onClick : props.onClick
+}))`
 
   width: 84px;
   height: 30px;
@@ -119,7 +148,7 @@ export const NavLogin = styled(motion.div).attrs(props => ({}))`
   line-height: 32px;
 
   //background-color: #000;
-  background: linear-gradient(135deg, rgba(25, 0, 255, 0.8), rgba(255, 0, 0, 0) 100%), linear-gradient(225deg, rgba(183, 0, 255, 0.8), rgba(255, 0, 0, 0) 100%);
+  background: linear-gradient(-120deg, #706ad3, #a766cc);
   border-radius: 8px;
 
   margin-left: 32px;
@@ -138,19 +167,21 @@ export const NavLogin = styled(motion.div).attrs(props => ({}))`
   :hover {
 
     //background-color: #fff;
-    background: linear-gradient(135deg, rgba(123, 0, 255, 0.8), rgba(255, 0, 0, 0) 100%), linear-gradient(225deg, rgba(255, 0, 204, 0.8), rgba(255, 0, 0, 0) 100%);
+    background: linear-gradient(-120deg, #706ad3, #a766cc);
 
     cursor: pointer;
     font-weight: 500;
     transition-duration: 500ms;
   }
 
-  //@media (max-width: 480px) {
-  //  display: none 
-  //}
+  @media (max-width: 480px) {
+    display: none
+  }
 `
 
 export const Branding = styled(motion.div).attrs(props => ({}))`
+  
+  margin-top: 2px;
   
   :hover {
     cursor: pointer;
@@ -163,11 +194,45 @@ export const Branding = styled(motion.div).attrs(props => ({}))`
 
 export const PageHeader = () => {
 
+	const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+	const data = useSelector(selectData)
+	const dispatch = useDispatch()
+
 	const route = useRouter().route
+	const media = useJsMediaQuery()
 
 	useEffect(()=> {
 
+		if(realmApp.currentUser === null) {
+
+			setIsLoggedIn(false)
+
+		} else {
+
+			setIsLoggedIn(true)
+		}
+
 	}, [])
+
+	useEffect(()=> {
+
+		if(realmApp.currentUser === null) {
+
+			setIsLoggedIn(false)
+
+		} else {
+
+			setIsLoggedIn(true)
+		}
+
+	}, [realmApp.currentUser])
+
+	useEffect(()=> {
+
+		console.log(isLoggedIn)
+
+	}, [isLoggedIn])
 
 	return (
 
@@ -179,184 +244,198 @@ export const PageHeader = () => {
 
 					<Branding>
 						<Image src={require("../../public/iosclub_branding.svg")}
-						       height={27}
-						       width={99}
+						       height={media.phone? 25: 27}
+						       width={media.phone? 91: 99}
+						       color={"#222"}
 						       layout={"fixed"}
 						       style={{
 
 							       padding: 0,
 							       margin: 0,
+							       zIndex: 10
+
 						       }}
 						/>
 					</Branding>
 
 				</Link>
 
-				<div style={{
-					display: "flex",
-					flexDirection: "row",
-					alignItems: "center"
-				}}>
+					<HeaderNavBar>
 
-					<Link href={'/routes/Introduction'} passHref>
+						<Link href={'/routes/Introduction'} passHref>
 
-						<NavTitle name={"/routes/Introduction"} route={route}>
+							<NavTitle name={"/routes/Introduction"} route={route}>
 
-							<div style={{
-								height: "44px",
-								paddingTop: 8,
-								paddingLeft: 4
-							}}>
-								社團介紹
-							</div>
+								<div style={{
+									height: "44px",
+									paddingTop: 8,
+									paddingLeft: 4
+								}}>
+									社團介紹
+								</div>
 
-							<div style={route == "/routes/Introduction" ? {
-								width: 80,
-								height: 4,
-								backgroundColor: "black"
-							} : {
-								width: 80,
-								height: 4,
-								backgroundColor: "transparent" }}/>
+								<div style={route == "/routes/Introduction" ? {
+									width: 80,
+									height: 4,
+									backgroundColor: "black"
+								} : {
+									width: 80,
+									height: 4,
+									backgroundColor: "transparent" }}/>
 
-							<div style={route == "/routes/Introduction" ? {
+								<div style={route == "/routes/Introduction" ? {
 
-								position: "absolute",
-								zIndex: -1,
-								width: 80,
-								height: 36,
-								background: "linear-gradient(to bottom, white, white, #f1e9ff, #bea4ff)"
-								// backgroundColor: "red"
+									position: "absolute",
+									zIndex: -1,
+									width: 80,
+									height: 36,
+									background: "linear-gradient(to bottom, white, white, white)"
+									// backgroundColor: "red"
 
-							} : {
-								display: "none" }}
-							/>
+								} : {
+									display: "none" }}
+								/>
 
 
-						</NavTitle>
+							</NavTitle>
 
-					</Link>
+						</Link>
 
-					<Link href={'/routes/LearningResources'} passHref>
-						<NavTitle name={"/routes/LearningResources"} route={route}>
+						<Link href={'/routes/LearningResources'} passHref>
+							<NavTitle name={"/routes/LearningResources"} route={route}>
 
-							<div style={{
-								height: "44px",
-								paddingTop: 8,
-								paddingLeft: 4
-							}}>
-								學習資源
-							</div>
+								<div style={{
+									height: "44px",
+									paddingTop: 8,
+									paddingLeft: 4
+								}}>
+									學習資源
+								</div>
 
-							<div style={route == "/routes/LearningResources" ? {
-								width: 80,
-								height: 4,
-								backgroundColor: "black"
-							} : {
-								width: 80,
-								height: 4,
-								backgroundColor: "transparent" }}/>
+								<div style={route == "/routes/LearningResources" ? {
+									width: 80,
+									height: 4,
+									backgroundColor: "black"
+								} : {
+									width: 80,
+									height: 4,
+									backgroundColor: "transparent" }}/>
 
-							<div style={route == "/routes/LearningResources" ? {
+								<div style={route == "/routes/LearningResources" ? {
 
-								position: "absolute",
-								zIndex: -1,
-								width: 80,
-								height: 36,
-								background: "linear-gradient(to bottom, white, white, #f1e9ff, #bea4ff)"
-								// backgroundColor: "red"
+									position: "absolute",
+									zIndex: -1,
+									width: 80,
+									height: 36,
+									background: "linear-gradient(to bottom, white, white, white)"
+									// backgroundColor: "red"
 
-							} : {
-								display: "none" }}
-							/>
+								} : {
+									display: "none" }}
+								/>
 
-						</NavTitle>
-					</Link>
+							</NavTitle>
+						</Link>
 
-					<Link href={'/routes/Teachers'} passHref>
-						<NavTitle name={"/routes/Teachers"} route={route}>
+						<Link href={'/routes/Teachers'} passHref>
+							<NavTitle name={"/routes/Teachers"} route={route}>
 
-							<div style={{
-								height: "44px",
-								paddingTop: 8,
-								paddingLeft: 4
-							}}>
-								指導老師
-							</div>
+								<div style={{
+									height: "44px",
+									paddingTop: 8,
+									paddingLeft: 4
+								}}>
+									指導老師
+								</div>
 
-							<div style={route == "/routes/Teachers" ? {
-								width: 80,
-								height: 4,
-								backgroundColor: "black"
-							} : {
-								width: 80,
-								height: 4,
-								backgroundColor: "transparent" }}/>
+								<div style={route == "/routes/Teachers" ? {
+									width: 80,
+									height: 4,
+									backgroundColor: "black"
+								} : {
+									width: 80,
+									height: 4,
+									backgroundColor: "transparent" }}/>
 
-							<div style={route == "/routes/Teachers" ? {
+								<div style={route == "/routes/Teachers" ? {
 
-								position: "absolute",
-								zIndex: -1,
-								width: 80,
-								height: 36,
-								background: "linear-gradient(to bottom, white, white, #f1e9ff, #bea4ff)"
-								// backgroundColor: "red"
+									position: "absolute",
+									zIndex: -1,
+									width: 80,
+									height: 36,
+									background: "linear-gradient(to bottom, white, white, white)"
+									// backgroundColor: "red"
 
-							} : {
-								display: "none" }}
-							/>
+								} : {
+									display: "none" }}
+								/>
 
-						</NavTitle>
-					</Link>
+							</NavTitle>
+						</Link>
 
-					<Link href={'/routes/Teams'} passHref>
+						<Link href={'/routes/Teams'} passHref>
 
-						<NavTitle name={"/routes/Teams"} route={route}>
+							<NavTitle name={"/routes/Teams"} route={route}>
 
-							<div style={{
-								height: "44px",
-								paddingTop: 8,
-								paddingLeft: 4
-							}}>
-								社團幹部
-							</div>
+								<div style={{
+									height: "44px",
+									paddingTop: 8,
+									paddingLeft: 4
+								}}>
+									社團幹部
+								</div>
 
-							<div style={route == "/routes/Teams" ? {
-								width: 80,
-								height: 4,
-								backgroundColor: "black"
-							} : {
-								width: 80,
-								height: 4,
-								backgroundColor: "transparent" }}/>
+								<div style={route == "/routes/Teams" ? {
+									width: 80,
+									height: 4,
+									backgroundColor: "black"
+								} : {
+									width: 80,
+									height: 4,
+									backgroundColor: "transparent" }}/>
 
-							<div style={route == "/routes/Teams" ? {
+								<div style={route == "/routes/Teams" ? {
 
-								position: "absolute",
-								zIndex: -1,
-								width: 80,
-								height: 36,
-								background: "linear-gradient(to bottom, white, white, #f1e9ff, #bea4ff)"
-								// backgroundColor: "red"
+									position: "absolute",
+									zIndex: -1,
+									width: 80,
+									height: 36,
+									background: "linear-gradient(to bottom, white, white, white)"
+									// backgroundColor: "red"
 
-							} : {
-								display: "none" }}
-							/>
+								} : {
+									display: "none" }}
+								/>
 
-						</NavTitle>
-					</Link>
+							</NavTitle>
+						</Link>
 
-					<Link href={'/routes/Entry'} passHref>
-						<NavLogin name={"/routes/Entry"} route={route}>
-							社員登入
-						</NavLogin>
-					</Link>
+						<NOSSR>
+
+						{
+							data.appState.userLoggedIn ?
+
+								<NavLogin name={"/routes/Entry"} route={route} onClick={ async() => {
+									realmApp.currentUser.logOut()
+										.then(res => {
+											dispatch(changeLoginState(false))
+										})
+								}}>
+									登出
+								</NavLogin> :
+
+								<Link href={'/routes/Entry'} passHref>
+									<NavLogin name={"/routes/Entry"} route={route}>
+										社員登入
+									</NavLogin>
+								</Link>
+						}
+
+					</NOSSR>
+
+					</HeaderNavBar>
 
 					<MobileMenu/>
-
-				</div>
-
-
 
 			</HeaderContent>
 
@@ -366,7 +445,7 @@ export const PageHeader = () => {
 
 					height: 1,
 					width: "100vw",
-					background: "#ccc",
+					background: "lightgray",
 
 				}}/>
 
@@ -379,6 +458,8 @@ export const PageHeader = () => {
 }
 
 export const PageFooter = () => {
+
+	const media = useJsMediaQuery()
 
 	return (
 
@@ -397,16 +478,32 @@ export const PageFooter = () => {
 
 			<FooterContent>
 
-				<div style={{
+				{ media.phone?
 
-					fontWeight: "300",
-					fontSize: "0.75rem",
-					letterSpacing: 1,
-					fontFamily: "Quicksand"
+					<div style={{
 
-				}}>
-					國立台北教育大學 iOS Club 社團 &nbsp; &nbsp;｜&nbsp; &nbsp; Copyright ⓒ 2022 NTUE iOS Club
-				</div>
+						fontWeight: "300",
+						fontSize: "0.75rem",
+						letterSpacing: 1,
+						fontFamily: "Quicksand"
+
+					}}>
+						Copyright ⓒ 2022 NTUE iOS Club
+					</div> :
+
+					<div style={{
+
+						fontWeight: "300",
+						fontSize: "0.75rem",
+						letterSpacing: 1,
+						fontFamily: "Quicksand"
+
+					}}>
+						國立台北教育大學 iOS Club 社團 &nbsp; &nbsp;｜&nbsp; &nbsp; Copyright ⓒ 2022 NTUE iOS Club
+					</div>
+				}
+
+
 
 				{/*<div style={{*/}
 

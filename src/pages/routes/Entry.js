@@ -4,12 +4,26 @@ import {PageBody, PageFooter, PageHeader} from "../../components/layouts/PageSec
 import styled from "styled-components";
 import {motion} from "framer-motion";
 import {useDispatch, useSelector} from "react-redux";
-import {selectData} from "../../global_state/dataSlice";
+import {changeLoginState, selectData} from "../../global_state/dataSlice";
+import {realmApp} from "../../components/RealmComponents";
+import * as Realm from "realm-web";
+import {
+	BarLoader,
+	BeatLoader,
+	CircleLoader, ClimbingBoxLoader,
+	ClipLoader,
+	DotLoader,
+	HashLoader,
+	MoonLoader,
+	PulseLoader
+} from "react-spinners";
+import {BiLogIn} from "react-icons/bi";
+import Image from "next/image";
 
 const Grid = styled(motion.div).attrs(props => ({}))`
 
   display: grid;
-  grid-template-columns: [Left] 1fr [Right];
+  grid-template-columns: [Left] 3fr [Middle] 2fr [Right];
   grid-template-rows: [Top] 16px [ContentTop] 60px [TitleDivider] 1fr [ContentBottom] 48px [Bottom];
   min-height: 100%;
   width: 100%;
@@ -32,9 +46,9 @@ const Grid = styled(motion.div).attrs(props => ({}))`
 
 `
 
-const Content = styled(motion.div).attrs(props => ({}))`
+const ContentRight = styled(motion.div).attrs(props => ({}))`
 
-  grid-area: TitleDivider / Left / ContentBottom / Right;
+  grid-area: TitleDivider / Middle / ContentBottom / Right;
 
   display: flex;
   justify-content: flex-start;
@@ -42,39 +56,58 @@ const Content = styled(motion.div).attrs(props => ({}))`
 
 `
 
-const Title = styled(motion.div).attrs(props => ({}))`
 
-  grid-area: ContentTop / Left / TitleDivider / Right;
+const ContentLeft = styled(motion.div).attrs(props => ({}))`
+
+  grid-area: TitleDivider / Left / ContentBottom / Middle;
 
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 
-  font-size: 1.2rem;
-  font-weight: 300;
-  font-family: "Noto Sans TC";
-  letter-spacing: ${props => props.route == props.name ? "4px" : "2px"};
-  transition-duration: 250ms;
-
-  z-index: 10;
 `
 
 const Entry = () => {
 
-	const [password, setPassword] = useState("werwer")
-	const [accountID, setAccountID] = useState("rrrr")
+	const [password, setPassword] = useState("")
+	const [email, setEmail] = useState("")
+	const [isAsync, setIsAsync] = useState(false)
 
 	const [showPassword, setShowPassword] = useState(false)
 
 	const data = useSelector(selectData)
 	const dispatch = useDispatch()
 
+	const [user, setUser] = useState();
+
+	async function loginEmailPassword(email, password) {
+		// Create an anonymous credential
+		const credentials = Realm.Credentials.emailPassword(email, password);
+		try {
+			// Authenticate the user
+			const user = await realmApp.logIn(credentials);
+			// `App.currentUser` updates to match the logged in user
+			console.assert(user.id === realmApp.currentUser.id);
+			return user;
+
+		} catch (err) {
+			console.error("Failed to log in", err);
+		}
+	}
 
 	useEffect(() => {
 
 		console.log("DATA IS!!! :: " + data)
+		setUser(realmApp.currentUser)
 
 	}, [])
+
+	useEffect(() => {
+
+		console.log("Current Input : " + email + " " + password)
+
+	}, [email, password])
+
 
 	return (
 
@@ -86,19 +119,16 @@ const Entry = () => {
 
 				<Grid>
 
-					<Title>
-						社員登入
-					</Title>
-
-					<Content>
+					<ContentRight>
 
 						<div style={{
-							height: "100%",
+							height: 256,
 							width: 1,
 							backgroundColor: "gray",
 
-							marginRight: 16
+							marginRight: 36
 						}}>
+
 
 						</div>
 
@@ -106,16 +136,48 @@ const Entry = () => {
 							display: "flex",
 							flexDirection: "column"
 						}}>
+
+							<div style={{
+
+								// height: 64,
+								display: "flex",
+								flexDirection: "row",
+								alignItems: "center",
+
+								marginBottom: 24,
+							}}>
+
+								<BiLogIn size={24} color={"black"}/>
+
+								<div style={{
+
+									fontSize: "1.2rem",
+									fontWeight: 300,
+									fontFamily: "Noto Sans TC",
+									letterSpacing: 2,
+									marginLeft: 16,
+									marginBottom: 4
+
+								}}>
+									社員登入
+								</div>
+
+							</div>
+
+
 							<div style={{
 								fontSize: "0.8rem",
 								color: "gray",
 							}}>
 								帳號
 							</div>
+							{	// await realmApp.emailPasswordAuth.registerUser({ email: "felix961308@gmail.com", password: "Lightii9613!" });
+							}
 							<input spellCheck={false}
-							       defaultValue={accountID}
+							       value={email}
 							       type={"text"}
-							       onChangeText={prev => setAccountID(prev)}
+							       onChange={e => setEmail(e.target.value)}
+
 							       style={{
 
 								       width: 180,
@@ -138,9 +200,10 @@ const Entry = () => {
 							}}>
 								密碼
 							</div>
+
 							<input spellCheck={false}
-							       defaultValue={password}
-							       onChangeText={prev => setAccountID(prev)}
+							       value={password}
+							       onChange={e => setPassword(e.target.value)}
 							       type={"password"}
 							       style={{
 
@@ -150,17 +213,64 @@ const Entry = () => {
 
 								       padding: "0 12px 0 12px",
 								       marginTop: 4,
-								       marginBottom: 12,
+								       marginBottom: 36,
 
 								       outline: "none",
 								       border: "none",
 								       color: "black",
 								       backgroundColor: "#eee"
 							       }}/>
+
+							<div style={{
+								display: "flex",
+								// justifyContent: "center",
+								alignItems: "center",
+								flexDirection: "row"
+							}}>
+
+								<button title={"This is amazing"} onClick={async () => {
+
+									setIsAsync(true)
+
+									loginEmailPassword(email, password)
+										.then(res => {
+
+											if (res) {
+
+												setIsAsync(false)
+												dispatch(changeLoginState(true))
+
+											}
+										})
+
+								}} style={{
+									outline: "none",
+									color: "white",
+									background: "linear-gradient(-120deg, #706ad3, #a766cc)",
+									border: "none",
+									borderRadius: 8,
+									height: 30,
+									width: 84,
+									marginRight: 12
+								}}>
+
+									<div style={{
+										fontSize: "0.8rem"
+									}}> 登入
+									</div>
+
+								</button>
+
+								{isAsync ?
+									<MoonLoader color={"indigo"} loading={true} size={21}/> : <></>
+								}
+
+							</div>
+
 						</div>
 
 
-					</Content>
+					</ContentRight>
 
 
 				</Grid>
