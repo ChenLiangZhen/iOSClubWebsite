@@ -262,45 +262,6 @@ export const PageHeader = () => {
 
 					<HeaderNavBar>
 
-						<Link href={'/routes/Introduction'} passHref>
-
-							<NavTitle name={"/routes/Introduction"} route={route}>
-
-								<div style={{
-									height: "44px",
-									paddingTop: 8,
-									paddingLeft: 4
-								}}>
-									社團介紹
-								</div>
-
-								<div style={route == "/routes/Introduction" ? {
-									width: 80,
-									height: 4,
-									backgroundColor: "black"
-								} : {
-									width: 80,
-									height: 4,
-									backgroundColor: "transparent" }}/>
-
-								<div style={route == "/routes/Introduction" ? {
-
-									position: "absolute",
-									zIndex: -1,
-									width: 80,
-									height: 36,
-									background: "linear-gradient(to bottom, white, white, white)"
-									// backgroundColor: "red"
-
-								} : {
-									display: "none" }}
-								/>
-
-
-							</NavTitle>
-
-						</Link>
-
 						<Link href={'/routes/LearningResources'} passHref>
 							<NavTitle name={"/routes/LearningResources"} route={route}>
 

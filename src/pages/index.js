@@ -49,6 +49,22 @@ const TitleText = styled(motion.div).attrs(props => ({}))`
   background: linear-gradient(-120deg, #6065c0, #9b55ab);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+
+  @media (min-width: 960px) and (max-width: 1280px) {
+    font-size: 3rem;
+  }
+
+  @media (min-width: 720px) and (max-width: 960px) {
+    font-size: 3rem;
+  }
+
+  @media (min-width: 480px) and (max-width: 720px) {
+    font-size: 2.8rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2.4rem;
+  }
 `
 
 const TitleDescription = styled(motion.div).attrs(props => ({}))`
@@ -135,7 +151,9 @@ const Home = () => {
 						}}>
 
 							<TitleText>
+
 								NTUE iOS Club
+
 							</TitleText>
 
 							<TitleDescription>
@@ -179,7 +197,7 @@ const Home = () => {
 						justifyContent: "center"
 
 					}}>
-
+9
 					</div>
 
 					<div style={{
@@ -212,9 +230,11 @@ const Home = () => {
 
 						<NOSSR>
 							<ImageList variant="masonry" sx={{ width: "100%", height: 320 }} cols={5} gap={12}>
+
 								{randomImageSet.map((item) => (
 									<ImageListItem key={item.img}>
 										<img
+
 											src={`${item.img}?w=248&fit=crop&auto=format`}
 											srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
 											alt={item.title}
